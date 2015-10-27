@@ -1,5 +1,7 @@
 class Todo < ActiveRecord::Base
   belongs_to :project
   has_many :comments, as: :commentable
-  has_many :events, as: :eventable
+  has_many :events, as: :resource
+  belongs_to :creator, class: 'User'
+  belongs_to :assignee, class: 'User'
 end
