@@ -11,17 +11,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027055125) do
+ActiveRecord::Schema.define(version: 20151028032318) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "project_id"
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "accesses", ["resource_type", "resource_id"], name: "index_accesses_on_resource_type_and_resource_id"
+  add_index "accesses", ["user_id"], name: "index_accesses_on_user_id"
+
+  create_table "calendar_events", force: :cascade do |t|
+    t.string   "content"
+    t.date     "begin"
+    t.date     "end"
+    t.date     "remind_time"
+    t.text     "location"
+    t.boolean  "is_show_creator"
+    t.integer  "caleventable_id"
+    t.string   "caleventable_type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "calendar_events", ["caleventable_type", "caleventable_id"], name: "index_calendar_events_on_caleventable_type_and_caleventable_id"
+
+  create_table "calendars", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "creator_id"
+    t.integer  "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "accesses", ["project_id"], name: "index_accesses_on_project_id"
-  add_index "accesses", ["user_id"], name: "index_accesses_on_user_id"
+  add_index "calendars", ["creator_id"], name: "index_calendars_on_creator_id"
+  add_index "calendars", ["team_id"], name: "index_calendars_on_team_id"
 
   create_table "comments", force: :cascade do |t|
     t.text     "content"
