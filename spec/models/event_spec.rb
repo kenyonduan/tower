@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id               :integer          not null, primary key
+#  action           :string
+#  type             :string
+#  initiator_id     :integer
+#  target_id        :integer
+#  target_type      :string
+#  projectable_id   :integer
+#  projectable_type :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
