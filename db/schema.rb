@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20151028032318) do
     t.string   "target_type"
     t.integer  "projectable_id"
     t.string   "projectable_type"
+    t.text     "detail"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
