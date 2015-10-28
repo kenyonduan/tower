@@ -10,26 +10,25 @@ module Concerns
     end
 
     def trigger_event(action, initiator_id,)
-      Event.new(
+      basic_params = {
           action: action,
           initiator_id: initiator_id,
           target_id: self.id,
-          target_type: self.class.to_s,
-          projectable_id: fetch_projectable_id,
-          projectable_type: project.class.to_s
-      )
+          target_type: self.class.to_s
+      }
+      Event.new(basic_params.merge!(projectable_params))
     end
 
-    def fetch_projectable_id
+    def projectable_params
       case self
         when Project
-          self.id
+          {projectable_id: self.id, projectable_type: 'Project'}
         when Todo
-          self.project.id
+          {projectable_id: self.project.id, projectable_type: 'Project'}
         when CalendarEvent
-          self.caleventable.id
+          {projectable_id: self.caleventable.id, projectable_type: 'Calendar'}
         else
-          raise '不支持的类型!'
+          {}
       end
     end
   end
