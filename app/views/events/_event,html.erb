@@ -1,0 +1,8 @@
+<li>
+  <%= event.strftime('%H:%M') %>
+  <%= link_to event.initiator.name user_url(event.initiator), :target => '_blank' %>
+  <%= event.action %>
+  <%= link_to target_name(event.target), target_url(event.target), :target => '_blank' %>
+  <br/>
+  <%= show_event_body(event) %>
+</li>

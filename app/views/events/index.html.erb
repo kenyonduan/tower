@@ -1,0 +1,15 @@
+<% events_group(@events).each do |key, events| %>
+    <% if events.any? %>
+        <% day, pro = key %>
+
+        <div>
+          <%= day %>
+          <%= link_to pro.name, projectable_url(pro), :target => '_blank' %>
+          <ul>
+            <% events.each do |event| %>
+                <%= render(event) %>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+<% end %>
