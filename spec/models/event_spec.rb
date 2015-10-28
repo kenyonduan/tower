@@ -3,7 +3,7 @@
 # Table name: events
 #
 #  id               :integer          not null, primary key
-#  action           :string
+#  action           :text
 #  type             :string
 #  initiator_id     :integer
 #  target_id        :integer

@@ -9,7 +9,7 @@ module EventsHelper
     case date_format(date)
       when date_format(now)
         '今'
-      when date_format(now - 1.days)
+      when date_format(now - 1.day)
         '昨'
       else
         date_format(date)
@@ -17,30 +17,24 @@ module EventsHelper
   end
 
   def date_format(date)
-    date.respond_to?(:strftime) ? date.strftime('%-m/%-d') : date.to_s
+    date.respond_to?(:strftime) ? date.strftime('%Y-%m-%d') : date.to_s
   end
 
   def projectable_url(projectable)
-    send("#{projectable.class.to_s.downcase}_url", target)
+    url_helpers.send("#{projectable.class.to_s.downcase}_url", target)
   end
 
   def target_name(target)
-    if target.respond_to?(:name)
-      target.name
-    elsif target.respond_to?(:title)
-      target.title
-    else
-      ''
-    end
+    target.try(:name) || target.try(:title) || ''
   end
 
   def target_url(target)
-    send("#{target.class.to_s.downcase}_url", target)
+    url_helpers.send("#{target.class.to_s.downcase}_url", target)
   end
 
   def show_event_body(event)
     if event.respond_to?(:comment) && event.comment.present?
-      "<a href='#{comment_url(event.comment)}'>#{event.comment.content}</a>"
+      "<a href='#{url_helpers.comment_url(event.comment)}'>#{event.comment.content}</a>"
     elsif event.detail.present?
       event.detail
     else

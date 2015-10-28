@@ -3,7 +3,7 @@
 # Table name: events
 #
 #  id               :integer          not null, primary key
-#  action           :string
+#  action           :text
 #  type             :string
 #  initiator_id     :integer
 #  target_id        :integer
@@ -22,8 +22,7 @@ class Event < ActiveRecord::Base
   # 作用与哪个目标对象(Todo)
   belongs_to :target, polymorphic: true
 
-  validates :action, presence: true, length: {maximum: 255}
-  validates :type, :target_type, presence: true
+  validates :action, :type, :target_type, presence: true
   validates :initiator_id, :projectable_id, :projectable_type, presence: true, numericality: {only_integer: true, greater_than: 0}
 
   # Event 负责处理通用的 Action events
