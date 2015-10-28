@@ -55,11 +55,13 @@ ActiveRecord::Schema.define(version: 20151028032318) do
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.integer  "event_id"
+    t.integer  "creator_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
 
   add_index "comments", ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+  add_index "comments", ["creator_id"], name: "index_comments_on_creator_id"
   add_index "comments", ["event_id"], name: "index_comments_on_event_id"
 
   create_table "events", force: :cascade do |t|
