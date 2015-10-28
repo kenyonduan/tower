@@ -8,6 +8,9 @@ class CreateEvents < ActiveRecord::Migration
       t.references :target, polymorphic: true, index: true
       t.references :projectable, polymorphic: true, index: true
 
+      # 用作 CommentEvent 的 comment content
+      t.text :detail
+
       t.timestamps null: false
     end
   end

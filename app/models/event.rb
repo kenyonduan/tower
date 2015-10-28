@@ -10,6 +10,7 @@
 #  target_type      :string
 #  projectable_id   :integer
 #  projectable_type :string
+#  detail           :text
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #
