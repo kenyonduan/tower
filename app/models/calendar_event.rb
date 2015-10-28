@@ -16,7 +16,8 @@
 #
 
 class CalendarEvent < ActiveRecord::Base
+  include Concerns::Eventable
+
   # 可以属于 Calendar 或者 Project
   belongs_to :caleventable, polymorphic: true
-  has_many :events, as: :target
 end

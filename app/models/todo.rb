@@ -15,9 +15,10 @@
 #
 
 class Todo < ActiveRecord::Base
+  include Concerns::Eventable
+
   belongs_to :project
   has_many :comments, as: :commentable
-  has_many :events, as: :target
   belongs_to :creator, class_name: 'User'
   belongs_to :assignee, class_name: 'User'
 
@@ -26,4 +27,33 @@ class Todo < ActiveRecord::Base
   validates :creator_id, :project_id, presence: true
 
   enum status: [:started, :pending, :finished, :deleted]
+
+  after_create :trigger_created_event
+  after_destroy :trigger_deleted_event
+
+  def trigger_created_event
+
+  end
+
+  def trigger_deleted_event
+
+  end
+
+  def trigger_finished_event
+
+  end
+
+  def trigger_assign_event
+
+  end
+
+  def trigger_reassign_event
+
+  end
+
+  def trigger_reschedule_event
+
+  end
+
+
 end

@@ -20,4 +20,10 @@ class Comment < ActiveRecord::Base
 
   validates :content, :event_id, :commentable_type, :commentable_id, presence: true
   validates :commentable_id, numericality: {only_integer: true, greater_than: 0}
+
+  after_create :trigger_created_event
+
+  def trigger_created_event
+
+  end
 end
