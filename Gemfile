@@ -23,17 +23,18 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+
 gem 'bcrypt'
 
+gem 'kaminari'
+
 gem 'zeus', group: :development
+
+gem 'database_cleaner', group: :test
 
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'annotate'
-end
-
-group :test do
-  gem 'database_cleaner'
 end
