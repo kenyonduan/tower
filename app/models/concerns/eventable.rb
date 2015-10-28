@@ -9,14 +9,21 @@ module Concerns
       after_destroy :trigger_deleted_event
     end
 
-    def trigger_event(action, initiator_id,)
+    def trigger_event(initiator_id, action, action_params=[])
       basic_params = {
-          action: action,
+          action: action_2_json(action, action_params),
           initiator_id: initiator_id,
           target_id: self.id,
           target_type: self.class.to_s
       }
-      Event.new(basic_params.merge!(projectable_params))
+      Event.create(basic_params.merge!(projectable_params))
+    end
+
+    def action_2_json(action, action_params)
+      {
+          action: action,
+          params: action_params
+      }.to_json
     end
 
     def projectable_params

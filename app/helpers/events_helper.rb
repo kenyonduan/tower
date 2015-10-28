@@ -41,4 +41,14 @@ module EventsHelper
       ''
     end
   end
+
+  def show_event_action(action)
+    begin
+      action_hash = JSON.parse(action)
+      action_hash.to_options!
+      action_hash[:action] % action_hash[:params].map { |param| to_chinese_date(param) }
+    rescue JSON::ParserError => e
+      action
+    end
+  end
 end
