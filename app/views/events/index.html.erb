@@ -7,7 +7,7 @@
           <%= link_to pro.name, projectable_url(pro), :target => '_blank' %>
           <ul>
             <% events.each do |event| %>
-                <%= render(event) %>
+                <%= render partial: 'events/event', locals: {event: event} %>
             <% end %>
           </ul>
         </div>

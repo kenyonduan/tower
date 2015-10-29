@@ -1,0 +1,7 @@
+<% if event.type == 'CommentEvent' %>
+    <% if event.comment.present? %>
+        <%= link_to event.comment.content, event_body_url(event) %>
+    <% else %>
+        <%= event.comment.content %>
+    <% end %>
+<% end %>

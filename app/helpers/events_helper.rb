@@ -32,14 +32,8 @@ module EventsHelper
     url_helpers.send("#{target.class.to_s.downcase}_url", target)
   end
 
-  def show_event_body(event)
-    if event.respond_to?(:comment) && event.comment.present?
-      "<a href='#{url_helpers.comment_url(event.comment)}'>#{event.comment.content}</a>"
-    elsif event.detail.present?
-      event.detail
-    else
-      ''
-    end
+  def event_body_url(event)
+    "#{target_url(event.target)}/##{event.comment.id}"
   end
 
   def show_event_action(action)

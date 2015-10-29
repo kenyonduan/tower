@@ -4,5 +4,5 @@
   <%= show_event_action(event.action) %>
   <%= link_to target_name(event.target), target_url(event.target), :target => '_blank' %>
   <br/>
-  <%= show_event_body(event) %>
+  <% render partial: 'event_body', locals: {event: event} %>
 </li>
