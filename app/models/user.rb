@@ -17,5 +17,7 @@ class User < ActiveRecord::Base
   has_many :projects, through: :accesses
   has_many :calendars, through: :accesses
 
+  validates :name, :email, :password_digest, presence: true, length: {maximum: 255}
+
   has_secure_password
 end
