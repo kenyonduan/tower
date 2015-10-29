@@ -13,17 +13,29 @@
 #
 
 class Comment < ActiveRecord::Base
+  include Concerns::BasicEventable
+  has_many :comment_events, through: :events
   # 多种类型的资源都有 Comment
   belongs_to :commentable, polymorphic: true
-  belongs_to :comment_event, primary_key: :event_id
   belongs_to :creator, class_name: 'User'
 
   validates :content, :event_id, :commentable_type, :commentable_id, presence: true
   validates :commentable_id, numericality: {only_integer: true, greater_than: 0}
 
   after_create :trigger_created_event
+  after_destroy :trigger_deleted_event
 
   def trigger_created_event
 
+  end
+
+  def trigger_deleted_event
+
+  end
+
+  def trigger_comment_event(initiator_id, action, action_params=[])
+    CommentEvent.create(
+
+    )
   end
 end
