@@ -12,5 +12,9 @@ Rails.application.routes.draw do
     resources :todos do
       resources :comments, only: [:create]
     end
+
+    resources :todo_lists do
+      resources :comments, only: [:create]
+    end
   end
 end

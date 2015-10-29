@@ -11,6 +11,8 @@ class CommentsController < ApplicationController
   def find_commentable
     @commentable = if params[:todo_id]
                      Todo.find(params[:todo_id])
+                   elsif params[:todo_list_id]
+                     TodoList.find(params[:todo_list_id])
                    else
                      # TODO 其他拥有评论的资源(Document 等)
                    end
