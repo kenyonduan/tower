@@ -13,6 +13,7 @@
 #  detail           :text
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  comment_id       :integer
 #
 
 # 单表继承(具体的变化交由子类来实现)

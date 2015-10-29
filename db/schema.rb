@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028145209) do
+ActiveRecord::Schema.define(version: 20151029060105) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(version: 20151028145209) do
     t.text     "content"
     t.integer  "commentable_id"
     t.string   "commentable_type"
-    t.integer  "event_id"
     t.integer  "creator_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
@@ -62,7 +61,6 @@ ActiveRecord::Schema.define(version: 20151028145209) do
 
   add_index "comments", ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
   add_index "comments", ["creator_id"], name: "index_comments_on_creator_id"
-  add_index "comments", ["event_id"], name: "index_comments_on_event_id"
 
   create_table "events", force: :cascade do |t|
     t.text     "action"
@@ -75,8 +73,10 @@ ActiveRecord::Schema.define(version: 20151028145209) do
     t.text     "detail"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "comment_id"
   end
 
+  add_index "events", ["comment_id"], name: "index_events_on_comment_id"
   add_index "events", ["initiator_id"], name: "index_events_on_initiator_id"
   add_index "events", ["projectable_type", "projectable_id"], name: "index_events_on_projectable_type_and_projectable_id"
   add_index "events", ["target_type", "target_id"], name: "index_events_on_target_type_and_target_id"
