@@ -30,7 +30,7 @@ class Project < ActiveRecord::Base
   after_create :init_default_todo_list
 
   def default_todo_list
-    todo_lists.where(list_type: TodoList.list_types[:defalut])
+    todo_lists.where(list_type: TodoList.list_types[:defalut]).first
   end
 
   private
