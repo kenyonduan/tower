@@ -23,7 +23,7 @@ class CommentEvent < Event
   class << self
 
     def trigger(initiator_id, action, action_params=[], &block)
-      Event.trigger(initiator_id, action, action_params, 'CommentEvent', block)
+      Event.trigger(initiator_id, action, action_params, 'CommentEvent', &block)
     end
   end
 end
