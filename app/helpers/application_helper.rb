@@ -6,4 +6,12 @@ module ApplicationHelper
   def url_helpers
     @url_helpers ||= Rails.application.routes.url_helpers
   end
+
+  def success_resp
+    {status: 'success'}
+  end
+
+  def permission_denied_resp
+    {status: 'error', message: '没有权限!'}
+  end
 end
