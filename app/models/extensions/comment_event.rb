@@ -21,9 +21,9 @@ class CommentEvent < Event
   belongs_to :comment
 
   class << self
-
-    def trigger(initiator_id, action, action_params=[], &block)
-      Event.trigger(initiator_id, action, action_params, 'CommentEvent', &block)
+    # 多种类型的资源都会有 Comment，所以将 event 相关方法放在这里
+    def trigger(params)
+      create(params)
     end
   end
 end
