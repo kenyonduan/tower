@@ -1,5 +1,5 @@
 module Concerns
-  module Eventable
+  module BasicEventable
     extend ActiveSupport::Concern
 
     included do
@@ -12,6 +12,7 @@ module Concerns
     def trigger_event(initiator_id, action, action_params=[])
       basic_params = {
           action: action_2_json(action, action_params),
+          type: 'Event',
           initiator_id: initiator_id,
           target_id: self.id,
           target_type: self.class.to_s

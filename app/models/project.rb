@@ -10,7 +10,7 @@
 #
 
 class Project < ActiveRecord::Base
-  include Concerns::Eventable
+  include Concerns::BasicEventable
 
   belongs_to :team
   has_many :todos

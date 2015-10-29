@@ -15,7 +15,7 @@
 #
 
 class Todo < ActiveRecord::Base
-  include Concerns::Eventable
+  include Concerns::BasicEventable
 
   belongs_to :project
   has_many :comments, as: :commentable
