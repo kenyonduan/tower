@@ -72,7 +72,6 @@ class Todo < ActiveRecord::Base
   def trigger_event(by, action)
     Event.create(
         action: action,
-        type: 'Event',
         initiator_id: by,
         target_id: self.id,
         target_type: self.class.to_s,
