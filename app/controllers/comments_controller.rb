@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
 
   def create
     comment = @commentable.commenting(current_user.id, params[:content])
-    render json: comment.to_json # 返回 json，具体展示交由前端自己决定
+    render json: comment # 返回 json，具体展示交由前端自己决定
   end
 
   private
