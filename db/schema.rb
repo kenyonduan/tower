@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029124620) do
+ActiveRecord::Schema.define(version: 20151029130156) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
@@ -94,8 +94,11 @@ ActiveRecord::Schema.define(version: 20151029124620) do
   create_table "projects", force: :cascade do |t|
     t.string   "name"
     t.integer  "team_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.text     "description"
+    t.boolean  "guest_lockable", default: false
+    t.integer  "project_type"
   end
 
   add_index "projects", ["team_id"], name: "index_projects_on_team_id"
