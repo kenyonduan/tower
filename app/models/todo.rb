@@ -59,4 +59,13 @@ class Todo < ActiveRecord::Base
     Event.trigger(by, '将任务完成时间从 %s 修改为 %s', [self.deadline, target_date])
     update(deadline: target_date)
   end
+
+  def commenting(by, content)
+    Comment.create(
+        creator_id: by,
+        content: content,
+        commentable_id: self.id,
+        commentable_type: self.class.to_s
+    )
+  end
 end
