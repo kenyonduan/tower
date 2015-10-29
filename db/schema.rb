@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029060105) do
+ActiveRecord::Schema.define(version: 20151029124620) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
@@ -106,21 +106,32 @@ ActiveRecord::Schema.define(version: 20151029060105) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "todo_lists", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "project_id"
+    t.integer  "creator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "todo_lists", ["creator_id"], name: "index_todo_lists_on_creator_id"
+  add_index "todo_lists", ["project_id"], name: "index_todo_lists_on_project_id"
+
   create_table "todos", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.date     "deadline"
-    t.integer  "status",      default: 0
-    t.integer  "project_id"
+    t.integer  "status",       default: 0
     t.integer  "creator_id"
     t.integer  "assignee_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "todo_list_id"
   end
 
   add_index "todos", ["assignee_id"], name: "index_todos_on_assignee_id"
   add_index "todos", ["creator_id"], name: "index_todos_on_creator_id"
-  add_index "todos", ["project_id"], name: "index_todos_on_project_id"
+  add_index "todos", ["todo_list_id"], name: "index_todos_on_todo_list_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "password_digest"
