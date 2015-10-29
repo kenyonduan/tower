@@ -17,7 +17,7 @@ class Project < ActiveRecord::Base
 
   belongs_to :team
   belongs_to :creator, class_name: 'User'
-  has_many :todos
+  has_many :todo_lists
   has_many :accesses, as: :resource
   has_many :users, through: :accesses
   has_many :calendar_events, as: :caleventable
@@ -26,4 +26,16 @@ class Project < ActiveRecord::Base
   validates :project_type, presence: true
 
   enum project_type: [:standard, :agile]
+
+  after_create :init_default_todo_list
+
+
+  private
+  def init_default_todo_list
+    TodoList.create(
+        name: '未归类任务',
+        project_id: self.id,
+        creator_id: self.creator_id
+    )
+  end
 end
