@@ -19,4 +19,11 @@
 # 单表继承(具体的变化交由子类来实现)
 class CommentEvent < Event
   belongs_to :comment
+
+  class << self
+
+    def trigger(initiator_id, action, action_params=[], &block)
+      Event.trigger(initiator_id, action, action_params, 'CommentEvent', block)
+    end
+  end
 end

@@ -23,11 +23,11 @@ class Comment < ActiveRecord::Base
   validates :commentable_id, numericality: {only_integer: true, greater_than: 0}
 
   def trigger_created_event(by)
-    trigger_event(by, "回复了#{commentable_name}", [], 'CommentEvent') { |basic_params| basic_params.merge!(comment_id: self.id) }
+    CommentEvent.trigger(by, "回复了#{commentable_name}", []) { |basic_params| basic_params.merge!(comment_id: self.id) }
   end
 
   def trigger_deleted_event(by)
-    trigger_event(by, '删除了回复', [], 'CommentEvent') { |basic_params| basic_params.merge!(detail: self.content) }
+    CommentEvent.trigger(by, '删除了回复', []) { |basic_params| basic_params.merge!(detail: self.content) }
   end
 
   def commentable_name

@@ -32,31 +32,31 @@ class Todo < ActiveRecord::Base
   after_destroy :trigger_deleted_event
 
   def trigger_created_event
-    trigger_event(self.creator_id, '创建了任务')
+    Event.trigger(self.creator_id, '创建了任务')
   end
 
   def trigger_deleted_event(by)
     self.deleted!
-    trigger_event(by, '删除了任务')
+    Event.trigger(by, '删除了任务')
   end
 
   def trigger_finished_event(by)
     self.finished!
-    trigger_event(by, '完成了任务')
+    Event.trigger(by, '完成了任务')
   end
 
   def trigger_assign_event(by, to)
-    trigger_event(by, "给 #{User.find(to).name} 指派了任务")
+    Event.trigger(by, "给 #{User.find(to).name} 指派了任务")
     update(assignee_id: to)
   end
 
   def trigger_reassign_event(by, to)
-    trigger_event(by, "把 #{assignee.name} 的任务指派给 #{User.find(to).name}")
+    Event.trigger(by, "把 #{assignee.name} 的任务指派给 #{User.find(to).name}")
     update(assignee_id: to)
   end
 
   def trigger_reschedule_event(by, target_date)
-    trigger_event(by, '将任务完成时间从 %s 修改为 %s', [self.deadline, target_date])
+    Event.trigger(by, '将任务完成时间从 %s 修改为 %s', [self.deadline, target_date])
     update(deadline: target_date)
   end
 end
