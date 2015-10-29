@@ -1,13 +1,13 @@
 class TodosController < ApplicationController
-  before_action :find_project, only: :create
+  before_action :find_todo_list, only: :create
   before_action :check_project_access, only: :create
   before_action :find_todo, except: :create
   before_action :check_todo_access, except: :create
 
 
   def create
-    Todo.create(todo_params.merge(creator: current_user))
-    render json: success_resp
+    todo = Todo.create(todo_params.merge(creator: current_user, todo_list: @todo_list))
+    render json: todo
   end
 
   def delete
@@ -44,8 +44,12 @@ class TodosController < ApplicationController
     params.require(:todo).permit(:title, :description, :deadline, :status, :assignee_id, :todo_list_id)
   end
 
-  def find_project
-    @project = Project.find(params[:project_id])
+  def find_todo_list
+    @todo_list = if params[:todo_list_id]
+                   TodoList.find(params[:todo_list_id])
+                 else
+                   Project.find(params[:project_id]).default_todo_list
+                 end
   end
 
   def find_todo
@@ -53,13 +57,13 @@ class TodosController < ApplicationController
   end
 
   def check_todo_access
-    unless current_user.projects.include?(@todo.todo_list.project)
+    unless current_user.accessible_projects_id.include?(@todo.todo_list.project_id)
       render json: permission_denied_resp
     end
   end
 
   def check_project_access
-    unless current_user.projects.include?(@project)
+    unless current_user.accessible_projects_id.include?(params[:project_id])
       render json: permission_denied_resp
     end
   end
