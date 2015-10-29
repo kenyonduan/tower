@@ -16,6 +16,7 @@ class Project < ActiveRecord::Base
   include Concerns::BasicEventable
 
   belongs_to :team
+  belongs_to :creator, class_name: 'User'
   has_many :todos
   has_many :accesses, as: :resource
   has_many :users, through: :accesses

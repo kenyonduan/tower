@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029130156) do
+ActiveRecord::Schema.define(version: 20151029131106) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
@@ -99,8 +99,10 @@ ActiveRecord::Schema.define(version: 20151029130156) do
     t.text     "description"
     t.boolean  "guest_lockable", default: false
     t.integer  "project_type"
+    t.integer  "creator_id"
   end
 
+  add_index "projects", ["creator_id"], name: "index_projects_on_creator_id"
   add_index "projects", ["team_id"], name: "index_projects_on_team_id"
 
   create_table "teams", force: :cascade do |t|
