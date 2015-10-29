@@ -16,4 +16,8 @@ class Calendar < ActiveRecord::Base
   has_many :accesses, as: :resource
   has_many :users, through: :accesses
   has_many :calendar_events, as: :caleventable
+
+  validates :name, presence: true, length: {maximum: 255}
+  validates :team_id, :creator_id, presence: true, numericality: {only_integer: true, greater_than: 0}
+
 end
