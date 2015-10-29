@@ -8,5 +8,12 @@ module Concerns
       after_create :trigger_created_event
       before_destroy :trigger_deleted_event
     end
+
+    def action_2_json(action, action_params)
+      {
+          action: action,
+          params: action_params
+      }.to_json
+    end
   end
 end
