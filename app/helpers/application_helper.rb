@@ -8,10 +8,10 @@ module ApplicationHelper
   end
 
   def success_resp
-    {status: 'success'}
+    @success_resp ||= {status: 'success'}
   end
 
   def permission_denied_resp
-    {status: 'error', message: '没有权限!'}
+    @permission_denied_resp ||= {status: 'error', message: '没有权限!'}
   end
 end
