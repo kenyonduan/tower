@@ -17,10 +17,10 @@
 class Todo < ActiveRecord::Base
   include Concerns::BasicEventable
 
-  belongs_to :project
   has_many :comments, as: :commentable
   belongs_to :creator, class_name: 'User'
   belongs_to :assignee, class_name: 'User'
+  belongs_to :todo_list
 
   validates :title, presence: true, length: {maximum: 255}
   validates :creator_id, :project_id, :assignee_id, numericality: {only_integer: true, greater_than: 0}
