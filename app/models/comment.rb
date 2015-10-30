@@ -12,14 +12,14 @@
 #
 
 class Comment < ActiveRecord::Base
-  include Concerns::BasicEventable
-
   # 多种类型的资源都有 Comment
   belongs_to :commentable, polymorphic: true
   belongs_to :creator, class_name: 'User'
 
   validates :content, :commentable_type, :commentable_id, :commentable_type, presence: true
   validates :commentable_id, :creator_id, numericality: {only_integer: true, greater_than: 0}
+
+  after_create :trigger_created_event
 
   def trigger_created_event
     trigger_event(self.creator_id, "回复了#{commentable_name}") { |basic_params| basic_params.merge!(comment_id: self.id) }
@@ -45,9 +45,8 @@ class Comment < ActiveRecord::Base
     event_params = {
         action: action,
         initiator_id: by,
-        target: self,
-        projectable_id: commentable.project_id,
-        projectable_type: 'Project'
+        target: commentable,
+        projectable: commentable.project
     }
     yield(event_params) if block_given?
     CommentEvent.trigger(event_params)
