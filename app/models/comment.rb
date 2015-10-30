@@ -14,7 +14,6 @@
 class Comment < ActiveRecord::Base
   include Concerns::BasicEventable
 
-  has_many :comment_events, through: :events
   # 多种类型的资源都有 Comment
   belongs_to :commentable, polymorphic: true
   belongs_to :creator, class_name: 'User'
@@ -46,8 +45,7 @@ class Comment < ActiveRecord::Base
     event_params = {
         action: action,
         initiator_id: by,
-        target_id: self.id,
-        target_type: self.class.to_s,
+        target: self,
         projectable_id: commentable.project_id,
         projectable_type: 'Project'
     }

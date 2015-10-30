@@ -50,10 +50,9 @@ RSpec.describe Todo, type: :model do
 
   it 'should created comment' do
     comment = @todo.commenting(@user.id, 'foobar')
-    expect(comment.class).to eq(Comment)
+    expect(@todo.comments.last).to eq(comment)
     expect(comment.content).to eq('foobar')
     expect(comment.creator).to eq(@user)
-    expect(comment.commentable).to eq(@todo)
   end
 
   it 'should created event' do
@@ -64,6 +63,8 @@ RSpec.describe Todo, type: :model do
     expect(event.initiator).to eq(@user)
     expect(event.target).to eq(@todo)
     expect(event.projectable).to eq(@project)
+
+
   end
 
   it 'should return todo list project_id' do
