@@ -8,6 +8,7 @@
 #  creator_id :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  list_type  :integer
 #
 
 FactoryGirl.define do
