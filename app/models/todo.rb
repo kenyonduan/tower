@@ -28,9 +28,6 @@ class Todo < ActiveRecord::Base
 
   enum status: [:started, :pending, :finished, :deleted]
 
-  after_create :trigger_created_event
-  after_destroy :trigger_deleted_event
-
   def trigger_created_event
     trigger_event(self.creator_id, '创建了任务')
   end
