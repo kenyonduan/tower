@@ -62,8 +62,7 @@ class Todo < ActiveRecord::Base
     Comment.create(
         creator_id: by,
         content: content,
-        commentable_id: self.id,
-        commentable_type: self.class.to_s
+        commentable: self
     )
   end
 

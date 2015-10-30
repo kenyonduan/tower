@@ -35,14 +35,4 @@ RSpec.describe Comment, type: :model do
     @todo_list_comment.commentable = nil
     expect(@todo_list_comment.commentable_name).to eq('Unkonw')
   end
-
-  it 'should created CommentEvent' do
-    @todo_comment.trigger_event(@user.id, action)
-    comment_event = Event.last
-    expect(comment_event.class).to eq(CommentEvent)
-    expect(comment_event.action).to eq(action)
-    expect(comment_event.initiator).to eq(@user)
-    expect(comment_event.target).to eq(@todo_comment.commentable)
-    expect(comment_event.projectable).to eq(@todo_comment.commentable.project)
-  end
 end

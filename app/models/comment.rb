@@ -22,11 +22,11 @@ class Comment < ActiveRecord::Base
   after_create :trigger_created_event
 
   def trigger_created_event
-    trigger_event(self.creator_id, "回复了#{commentable_name}") { |basic_params| basic_params.merge!(comment_id: self.id) }
+    trigger_event(self.creator_id, "回复了#{commentable_name}") { |event_params| event_params.merge!(comment_id: self.id) }
   end
 
   def trigger_deleted_event(by)
-    trigger_event(by, '删除了回复') { |basic_params| basic_params.except!(:target_id, :target_type).merge!(detail: self.content) }
+    trigger_event(by, '删除了回复') { |event_params| event_params.except!(:target_id, :target_type).merge!(detail: self.content) }
     self.destroy
   end
 

@@ -48,18 +48,26 @@ RSpec.describe Todo, type: :model do
     expect(@todo.deadline).to eq(date)
   end
 
-  it 'should created comment' do
-    comment = @todo.commenting(@user.id, 'foobar')
-    expect(@todo.comments.last).to eq(comment)
+  it 'should created comment and comment_event' do
+    @todo.commenting(@user.id, 'foobar')
+
+    comment = @todo.comments.last
     expect(comment.content).to eq('foobar')
     expect(comment.creator).to eq(@user)
+    expect(comment.commentable).to eq(@todo)
+
+    # 检查 comment after_create callback 所创建的 comment_event
+    comment_event = @todo.events.last
+    expect(comment_event.comment).to eq(comment)
+    expect(comment_event.target).to eq(@todo)
+    expect(comment_event.projectable).to eq(@todo.project)
   end
 
   it 'should created event' do
-    action = '创建了任务'
-    event = @todo.trigger_event(@user.id, action)
-    expect(@todo.events.last).to eq(event)
-    expect(event.action).to eq(action)
+    @todo.trigger_event(@user.id, '创建了任务')
+
+    event = @todo.events.last
+    expect(event.action).to eq('创建了任务')
     expect(event.initiator).to eq(@user)
     expect(event.target).to eq(@todo)
     expect(event.projectable).to eq(@project)
