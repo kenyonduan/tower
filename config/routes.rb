@@ -9,12 +9,18 @@ Rails.application.routes.draw do
   end
 
   resources :projects, only: [:show, :update] do
-    resources :todos do
-      resources :comments, only: [:create]
-    end
-
     resources :todo_lists do
-      resources :comments, only: [:create]
+      resources :todos do
+        member do
+          %w(finish assign reassign reschedule).each do |action|
+            post action, to: "todos##{action}"
+          end
+        end
+
+        resources :comments, only: [:create, :destroy]
+      end
+
+      resources :comments, only: [:create, :destroy]
     end
   end
 end
