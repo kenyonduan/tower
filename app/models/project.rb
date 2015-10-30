@@ -16,6 +16,8 @@
 class Project < ActiveRecord::Base
   include Concerns::BasicEventable
 
+  enum project_type: [:standard, :agile]
+
   belongs_to :team
   belongs_to :creator, class_name: 'User'
   has_many :todo_lists
@@ -24,9 +26,9 @@ class Project < ActiveRecord::Base
   has_many :calendar_events, as: :caleventable
 
   validates :name, presence: true, length: {maximum: 255}
-  validates :team_id, :project_type, presence: true, numericality: {only_integer: true, greater_than: 0}
+  validates :team_id, presence: true, numericality: {only_integer: true, greater_than: 0}
+  validates :project_type, presence: true, inclusion: {in: Project.project_types.values, message: "%{value} is not a valid project_type"}
 
-  enum project_type: [:standard, :agile]
 
   after_create :init_default_todo_list
 

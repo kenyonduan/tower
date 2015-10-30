@@ -17,6 +17,8 @@
 class Todo < ActiveRecord::Base
   include Concerns::BasicEventable
 
+  enum status: [:started, :pending, :finished, :deleted]
+
   has_many :comments, as: :commentable
   belongs_to :creator, class_name: 'User'
   belongs_to :assignee, class_name: 'User'
@@ -25,8 +27,7 @@ class Todo < ActiveRecord::Base
   validates :title, presence: true, length: {maximum: 255}
   validates :creator_id, :project_id, :assignee_id, numericality: {only_integer: true, greater_than: 0}
   validates :creator_id, :project_id, presence: true
-
-  enum status: [:started, :pending, :finished, :deleted]
+  validates :status, presence: true, inclusion: {in: Todo.statuses.values, message: "%{value} is not a valid status"}
 
   def trigger_created_event
     trigger_event(self.creator_id, '创建了任务')
