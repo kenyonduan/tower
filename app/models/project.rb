@@ -10,6 +10,7 @@
 #  description    :text
 #  guest_lockable :boolean          default(FALSE)
 #  project_type   :integer
+#  creator_id     :integer
 #
 
 class Project < ActiveRecord::Base

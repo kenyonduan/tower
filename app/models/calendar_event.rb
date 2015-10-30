@@ -13,6 +13,7 @@
 #  caleventable_type :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  creator_id        :integer
 #
 
 class CalendarEvent < ActiveRecord::Base
@@ -20,4 +21,5 @@ class CalendarEvent < ActiveRecord::Base
 
   # 可以属于 Calendar 或者 Project
   belongs_to :caleventable, polymorphic: true
+  belongs_to :creator, class_name: 'User'
 end

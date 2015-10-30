@@ -13,6 +13,7 @@
 #  caleventable_type :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  creator_id        :integer
 #
 
 FactoryGirl.define do

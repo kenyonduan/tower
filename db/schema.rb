@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029131106) do
+ActiveRecord::Schema.define(version: 20151030014212) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
@@ -35,9 +35,11 @@ ActiveRecord::Schema.define(version: 20151029131106) do
     t.string   "caleventable_type"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "creator_id"
   end
 
   add_index "calendar_events", ["caleventable_type", "caleventable_id"], name: "index_calendar_events_on_caleventable_type_and_caleventable_id"
+  add_index "calendar_events", ["creator_id"], name: "index_calendar_events_on_creator_id"
 
   create_table "calendars", force: :cascade do |t|
     t.string   "name"
