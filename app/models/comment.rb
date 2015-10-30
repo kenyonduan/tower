@@ -34,6 +34,8 @@ class Comment < ActiveRecord::Base
     case self.commentable
       when Todo
         '任务'
+      when TodoList
+        '任务清单'
       else
         'Unkonw'
     end
