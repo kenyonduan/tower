@@ -33,7 +33,7 @@ class Todo < ActiveRecord::Base
   end
 
   def trigger_deleted_event(by)
-    self.deleted!
+    self.deleted! # 软删除
     trigger_event(by, '删除了任务')
   end
 

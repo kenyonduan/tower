@@ -1,16 +1,15 @@
 class TodosController < ApplicationController
-  before_action :find_todo_list, only: :create
   before_action :check_project_access, only: :create
   before_action :find_todo, except: :create
   before_action :check_todo_access, except: :create
 
-
   def create
-    todo = Todo.create(todo_params.merge(creator: current_user, todo_list: @todo_list))
+    todo = Todo.create(todo_params.merge(creator: current_user, todo_list_id: params[:todo_list_id]))
     render json: todo
   end
 
-  def delete
+  def destroy
+    # TODO: 删除权限控制(creator、manager) 不能越级删除
     @todo.trigger_deleted_event(current_user.id)
     render json: success_resp
   end
@@ -39,17 +38,8 @@ class TodosController < ApplicationController
   end
 
   private
-
   def todo_params
     params.require(:todo).permit(:title, :description, :deadline, :status, :assignee_id, :todo_list_id)
-  end
-
-  def find_todo_list
-    @todo_list = if params[:todo_list_id]
-                   TodoList.find(params[:todo_list_id])
-                 else
-                   Project.find(params[:project_id]).default_todo_list
-                 end
   end
 
   def find_todo
@@ -57,8 +47,8 @@ class TodosController < ApplicationController
   end
 
   def check_todo_access
-    unless current_user.accessible_projects_id.include?(@todo.todo_list.project_id)
-      render json: permission_denied_resp
+    if current_user.id != @todo.creator_id # 创建者就一定有权限
+      render json: permission_denied_resp unless current_user.accessible_projects_id.include?(@todo.todo_list.project_id)
     end
   end
 
