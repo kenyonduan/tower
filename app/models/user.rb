@@ -19,11 +19,11 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  def accessible_projects_id
-    accesses.where(resource_type: 'Project').pluck(:resource_id)
+  def accessible_projects_id(team)
+    team.projects.pluck(:id) & accesses.where(resource_type: 'Project').pluck(:resource_id)
   end
 
-  def accessible_calendars_id
-    accesses.where(resource_type: 'Calendar').pluck(:resource_id)
+  def accessible_calendars_id(team)
+    team.calendars.pluck(:id) & accesses.where(resource_type: 'Calendar').pluck(:resource_id)
   end
 end
