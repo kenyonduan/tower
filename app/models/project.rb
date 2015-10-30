@@ -27,10 +27,14 @@ class Project < ActiveRecord::Base
 
   validates :name, presence: true, length: {maximum: 255}
   validates :team_id, presence: true, numericality: {only_integer: true, greater_than: 0}
-  validates :project_type, presence: true, inclusion: {in: Project.project_types.values, message: "%{value} is not a valid project_type"}
+  validates :project_type, presence: true, inclusion: {in: Project.project_types, message: "%{value} is not a valid project_type"}
 
 
   after_create :init_default_todo_list
+
+  def trigger_created_event
+    # TODO
+  end
 
   def default_todo_list
     todo_lists.where(list_type: TodoList.list_types[:defalut]).first
