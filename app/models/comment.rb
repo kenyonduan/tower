@@ -20,10 +20,10 @@ class Comment < ActiveRecord::Base
   belongs_to :creator, class_name: 'User'
 
   validates :content, :commentable_type, :commentable_id, presence: true
-  validates :commentable_id, numericality: {only_integer: true, greater_than: 0}
+  validates :commentable_id, :creator_id, numericality: {only_integer: true, greater_than: 0}
 
-  def trigger_created_event(by)
-    trigger_event(by, "回复了#{commentable_name}", []) { |basic_params| basic_params.merge!(comment_id: self.id) }
+  def trigger_created_event
+    trigger_event(self.creator_id, "回复了#{commentable_name}", []) { |basic_params| basic_params.merge!(comment_id: self.id) }
   end
 
   def trigger_deleted_event(by)
