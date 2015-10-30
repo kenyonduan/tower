@@ -13,6 +13,7 @@
 
 class TodoList < ActiveRecord::Base
   include Concerns::BasicEventable
+  include Concerns::Commentable
 
   enum list_type: [:defalut, :normal]
 

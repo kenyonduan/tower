@@ -16,6 +16,7 @@
 
 class Todo < ActiveRecord::Base
   include Concerns::BasicEventable
+  include Concerns::Commentable
 
   enum status: [:started, :pending, :finished, :deleted]
 
@@ -56,14 +57,6 @@ class Todo < ActiveRecord::Base
   def trigger_reschedule_event(by, target_date)
     trigger_event(by, action_2_json('将任务完成时间从 %s 修改为 %s', [self.deadline, target_date]))
     update(deadline: target_date)
-  end
-
-  def commenting(by, content)
-    Comment.create(
-        creator_id: by,
-        content: content,
-        commentable: self
-    )
   end
 
   def trigger_event(by, action)
