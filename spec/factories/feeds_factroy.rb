@@ -1,4 +1,5 @@
 module FeedsFactroy
+  # 统一创建基础的 model
   def init_feeds
     # user
     @user = create(:user)
