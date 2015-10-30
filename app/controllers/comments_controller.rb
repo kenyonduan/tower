@@ -25,7 +25,8 @@ class CommentsController < ApplicationController
   end
 
   def check_commentable_access
-    unless current_user.accessible_projects_id.include?(params[:project_id])
+    @project = Project.find(params[:project_id])
+    unless current_user.accessible_projects_id(@project.team).include?(@project.id)
       render json: permission_denied_resp
     end
   end
