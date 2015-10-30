@@ -6,7 +6,6 @@ module Concerns
       has_many :events, as: :target
 
       after_create :trigger_created_event
-      before_destroy :trigger_deleted_event
     end
 
     def action_2_json(action, action_params)
