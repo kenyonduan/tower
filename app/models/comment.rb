@@ -19,15 +19,15 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, polymorphic: true
   belongs_to :creator, class_name: 'User'
 
-  validates :content, :commentable_type, :commentable_id, presence: true
+  validates :content, :commentable_type, :commentable_id, :commentable_type, presence: true
   validates :commentable_id, :creator_id, numericality: {only_integer: true, greater_than: 0}
 
   def trigger_created_event
-    trigger_event(self.creator_id, "回复了#{commentable_name}", []) { |basic_params| basic_params.merge!(comment_id: self.id) }
+    trigger_event(self.creator_id, "回复了#{commentable_name}") { |basic_params| basic_params.merge!(comment_id: self.id) }
   end
 
   def trigger_deleted_event(by)
-    trigger_event(by, '删除了回复', []) { |basic_params| basic_params.except!(:target_id, :target_type).merge!(detail: self.content) }
+    trigger_event(by, '删除了回复') { |basic_params| basic_params.except!(:target_id, :target_type).merge!(detail: self.content) }
     self.destroy
   end
 
@@ -48,7 +48,7 @@ class Comment < ActiveRecord::Base
         initiator_id: by,
         target_id: self.id,
         target_type: self.class.to_s,
-        projectable_id: todo_list.project_id,
+        projectable_id: commentable.project_id,
         projectable_type: 'Project'
     }
     yield(event_params) if block_given?

@@ -23,5 +23,9 @@ class TodoList < ActiveRecord::Base
 
   validates :name, presence: true, length: {maximum: 255}
   validates :project_id, :creator_id, presence: true, numericality: {only_integer: true, greater_than: 0}
-  validates :list_type, presence: true, inclusion: {in: TodoList.list_types.values, message: "%{value} is not a valid list_type"}
+  validates :list_type, presence: true, inclusion: {in: TodoList.list_types, message: "%{value} is not a valid list_type"}
+
+  def trigger_created_event
+    # TODO
+  end
 end
