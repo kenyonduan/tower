@@ -58,13 +58,11 @@ RSpec.describe Todo, type: :model do
   it 'should created event' do
     action = '创建了任务'
     event = @todo.trigger_event(@user.id, action)
-    expect(event.class).to eq(Event)
+    expect(@todo.events.last).to eq(event)
     expect(event.action).to eq(action)
     expect(event.initiator).to eq(@user)
     expect(event.target).to eq(@todo)
     expect(event.projectable).to eq(@project)
-
-
   end
 
   it 'should return todo list project_id' do

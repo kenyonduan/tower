@@ -71,8 +71,7 @@ class Todo < ActiveRecord::Base
     Event.create(
         action: action,
         initiator_id: by,
-        target_id: self.id,
-        target_type: self.class.to_s,
+        target: self,
         projectable_id: todo_list.project_id,
         projectable_type: 'Project'
     )

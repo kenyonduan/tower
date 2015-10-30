@@ -23,6 +23,6 @@ class Event < ActiveRecord::Base
   # 作用与哪个目标对象(Todo)
   belongs_to :target, polymorphic: true
 
-  validates :action, :type, :target_type, presence: true
-  validates :initiator_id, :projectable_id, :projectable_type, presence: true, numericality: {only_integer: true, greater_than: 0}
+  validates :action, :target_type, :projectable_type, presence: true
+  validates :initiator_id, :target_id, :projectable_id, presence: true, numericality: {only_integer: true, greater_than: 0}
 end
