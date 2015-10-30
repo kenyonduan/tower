@@ -16,7 +16,7 @@
 
 FactoryGirl.define do
   factory :todo do
-    
+    title Faker::Name.title
+    description Faker::Lorem.sentence
   end
-
 end

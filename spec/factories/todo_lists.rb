@@ -13,7 +13,7 @@
 
 FactoryGirl.define do
   factory :todo_list do
-    
+    name Faker::Name.title
   end
 
 end
