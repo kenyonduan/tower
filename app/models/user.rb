@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_many :teams, through: :memberships
   has_many :accesses
 
-  validates :name, :email, :password_digest, presence: true, length: {maximum: 255}
+  validates :name, :email, presence: true, length: {maximum: 255}
 
   has_secure_password
 

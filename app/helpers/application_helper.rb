@@ -1,6 +1,6 @@
 module ApplicationHelper
   def current_user
-    @user ||= User.create(name: 'test@mycolorway.com', password: 'foobar')
+    @current_user ||= User.find(session[:user])
   end
 
   def url_helpers
