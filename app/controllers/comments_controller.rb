@@ -3,8 +3,8 @@ class CommentsController < ApplicationController
   before_action :find_comment, :check_comment_access, only: :destroy
 
   def create
-    comment = @commentable.commenting(current_user.id, params[:content])
-    render json: comment # 返回 json，具体展示交由前端自己决定
+    # 返回 json，具体展示交由前端自己决定(使用 js 增加 dom 节点并写入数据)
+    render json: @commentable.commenting(current_user.id, params[:content])
   end
 
   def destroy
