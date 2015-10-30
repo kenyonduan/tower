@@ -65,7 +65,7 @@ RSpec.describe Todo, type: :model do
     expect(event.projectable).to eq(@project)
   end
 
-  it 'should return todo list project_id' do
-    expect(@todo.project_id).to eq(@project.id)
+  it 'should return todo list project' do
+    expect(@todo.project).to eq(@project)
   end
 end

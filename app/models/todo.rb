@@ -72,12 +72,11 @@ class Todo < ActiveRecord::Base
         action: action,
         initiator_id: by,
         target: self,
-        projectable_id: todo_list.project_id,
-        projectable_type: 'Project'
+        projectable: project
     )
   end
 
-  def project_id
-    todo_list.project_id
+  def project
+    todo_list.project
   end
 end
