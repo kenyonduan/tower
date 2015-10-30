@@ -26,7 +26,7 @@ RSpec.describe CommentsController, type: :controller do
       user = create(:user)
       comment = create(:comment, creator: user, commentable: @todo)
       delete :destroy, project_id: @project.id, todo_list_id: @todo_list.id, todo_id: @todo.id, id: comment.id
-      expect(JSON.parse(response.body)).to eq({'status' => 'error', 'message' => '没有权限!'})
+      expect(JSON.parse(response.body)).to eq(permission_denied_resp)
     end
   end
 end
