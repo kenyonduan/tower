@@ -37,6 +37,6 @@ class CommentsController < ApplicationController
 
   def check_comment_access
     # TODO 管理员也是可以删除 comment 的，前期就不考虑这个了
-    render json: permission_denied_resp unless current_user.id != @comment.creator_id
+    render json: permission_denied_resp unless current_user == @comment.creator
   end
 end
