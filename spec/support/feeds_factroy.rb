@@ -7,6 +7,8 @@ module FeedsFactroy
     @team = create(:team, creator: @user)
     # project
     @project = create(:project, creator: @user, team: @team, project_type: Project.project_types[:standard])
+    # access
+    @access = create(:access, user: @user, resource: @project)
     # todo_list
     @todo_list = create(:todo_list, creator: @user, project: @project, list_type: TodoList.list_types[:defalut])
     # todo
