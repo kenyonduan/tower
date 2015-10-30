@@ -28,6 +28,7 @@ class Comment < ActiveRecord::Base
 
   def trigger_deleted_event(by)
     trigger_event(by, '删除了回复', []) { |basic_params| basic_params.except!(:target_id, :target_type).merge!(detail: self.content) }
+    self.destroy
   end
 
   def commentable_name
