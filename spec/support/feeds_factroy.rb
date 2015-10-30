@@ -17,4 +17,12 @@ module FeedsFactroy
     @todo_comment = create(:comment, creator: @user, commentable: @todo)
     @todo_list_comment = create(:comment, creator: @user, commentable: @todo_list)
   end
+
+  def permission_denied_resp
+    {'status' => 'error', 'message' => '没有权限!'}
+  end
+
+  def success_resp
+    {'status' => 'success'}
+  end
 end
