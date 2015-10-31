@@ -38,7 +38,12 @@ class Event < ActiveRecord::Base
         target: target.serializable_hash,
         projectable: projectable.serializable_hash,
         comment: self.try(:comment).try(:serializable_hash),
-        initiator: initiator.serializable_hash
+        initiator: initiator.serializable_hash,
+        html: events_controller.render_to_string(self)
     )
+  end
+
+  def events_controller
+    @events_controller ||= EventsController.new
   end
 end
