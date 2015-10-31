@@ -29,8 +29,6 @@ RSpec.describe Event, type: :model do
   end
 
   it 'should response notify hash' do
-    allow(Event).to receive(:record_timestamps).and_return(false)
-
     notify_hash = event.notify_hash
     expect(except_date(notify_hash.delete(:target))).to eq({
                                                                "title" => @todo.title,
