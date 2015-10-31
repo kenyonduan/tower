@@ -1,15 +1,19 @@
 <% events_group(@events).each do |key, events| %>
-    <% if events.any? %>
-        <% day, pro = key %>
+  <% if events.any? %>
+    <div>
+      <% day, pro = key %>
 
-        <div>
-          <%= day %>
-          <%= link_to pro.name, projectable_url(pro), :target => '_blank' %>
-          <ul>
-            <% events.each do |event| %>
-                <%= render partial: 'events/event', locals: {event: event} %>
+      <div>
+        <%= day %>
+        <%= link_to pro.name, projectable_url(pro), :target => '_blank' %>
+        <ul>
+          <% events.each do |event| %>
+            <% cache(event) do %>
+              <%= render partial: 'events/event', locals: {event: event} %>
             <% end %>
-          </ul>
-        </div>
-    <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
 <% end %>
