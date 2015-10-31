@@ -19,10 +19,10 @@ module FeedsFactroy
   end
 
   def permission_denied_resp
-    {'status' => 'error', 'message' => '没有权限!'}
+    '{"status":"error","message":"没有权限!"}'
   end
 
   def success_resp
-    {'status' => 'success'}
+    '{"status":"success"}'
   end
 end
