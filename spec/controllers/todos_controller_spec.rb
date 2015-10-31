@@ -34,18 +34,6 @@ RSpec.describe TodosController, type: :controller do
     end
   end
 
-  describe '#actions' do
-    let(:match_status) {
-      {
-          destroy: 'deleted',
-          finish: 'finished',
-          assign: 'assignee_id',
-          reassign: 'assignee_id',
-          reschedule: 'deadline'
-      }
-    }
-  end
-
   it 'should be deleted' do
     expect {
       post :destroy, project_id: @project.id, todo_list_id: @todo_list.id, id: @todo.id
