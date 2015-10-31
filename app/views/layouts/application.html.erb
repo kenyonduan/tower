@@ -7,8 +7,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<script type="text/javascript" data-turbolinks-eval=false>
+  <% if current_user %>
+  App.current_user_id = <%= current_user.id %>;
+  App.current_team_id = "<%= current_team_id %>";
+  <% end %>
+</script>
 <%= yield %>
-
 </body>
 </html>
