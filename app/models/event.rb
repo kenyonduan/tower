@@ -25,4 +25,20 @@ class Event < ActiveRecord::Base
 
   validates :action, :target_type, :projectable_type, presence: true
   validates :initiator_id, :target_id, :projectable_id, presence: true, numericality: {only_integer: true, greater_than: 0}
+
+  after_create :realtime_push_to_client
+
+  def realtime_push_to_client
+    MessageBus.publish "/events", notify_hash, user_ids: projectable.users.pluck(:id)
+  end
+
+  def notify_hash
+    serializable_hash.merge(
+        type: type,
+        target: target.serializable_hash,
+        projectable: projectable.serializable_hash,
+        comment: self.try(:comment).try(:serializable_hash),
+        initiator: initiator.serializable_hash
+    )
+  end
 end
