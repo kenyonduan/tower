@@ -1,0 +1,8 @@
+<li>
+  <%= comment_event.created_at.strftime('%H:%M') %>
+  <%= link_to comment_event.initiator.name, 'javascript:void(0)', :target => '_blank' %>
+  <%= show_event_action(comment_event.action) %>
+  <%= link_to target_name(comment_event.target), target_url(comment_event.target), :target => '_blank' %>
+  <br/>
+  <% render partial: 'events/event_body', locals: {event: comment_event} %>
+</li>
