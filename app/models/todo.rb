@@ -25,10 +25,10 @@ class Todo < ActiveRecord::Base
   belongs_to :assignee, class_name: 'User'
   belongs_to :todo_list
 
-  validates :title, presence: true, length: {maximum: 255}
+  validates_presence_of :title, :creator_id, :todo_list_id
+  validates :title, length: {maximum: 255}
   validates :creator_id, :todo_list_id, numericality: {only_integer: true, greater_than: 0}
-  validates :creator_id, :todo_list_id, presence: true
-  validates :status, inclusion: {in: Todo.statuses, message: "%{value} is not a valid status"}
+  validates :status, inclusion: {in: Todo.statuses, message: "%{value} is not a valid status"}, if: :status
 
   def trigger_created_event
     trigger_event(self.creator_id, '创建了任务')
