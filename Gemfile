@@ -32,9 +32,17 @@ gem 'zeus', group: :development
 
 gem 'database_cleaner', group: :test
 
+gem 'redis', '~> 3.2.1'
+
+gem 'message_bus', '~> 1.0.16'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'annotate'
+end
+
+group :production do
+  gem 'puma', '~> 2.14.0'
 end
