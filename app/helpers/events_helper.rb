@@ -1,7 +1,7 @@
 module EventsHelper
   # 对 event 进行分组(日期、Projectable)
   def events_group(events)
-    events.group_by { |event| [event_day_format(event.created_at.to_date), event.projectable] }
+    events.group_by { |event| [event.created_at.to_date, event.projectable] }
   end
 
   def event_day_format(date)
@@ -21,7 +21,11 @@ module EventsHelper
   end
 
   def projectable_url(projectable)
-    url_helpers.send("#{projectable.class.to_s.downcase}_url", target)
+    url_helpers.send("#{projectable.class.to_s.downcase}_url", projectable)
+  end
+
+  def projectable_key(projectable)
+    "#{projectable.class.to_s.downcase}_#{projectable.id}"
   end
 
   def target_name(target)
@@ -29,7 +33,31 @@ module EventsHelper
   end
 
   def target_url(target)
-    url_helpers.send("#{target.class.to_s.downcase}_url", target)
+    method, params = case target
+                       when Todo
+                         ['project_todo_list_todo',
+                          {
+                              project_id: target.project.id,
+                              todo_list_id: target.todo_list.id,
+                              id: target.id
+                          }
+                         ]
+                       when Project
+                         ['project', {id: target.id}]
+                       when TodoList
+                         [
+                             'project_todo_list',
+                             {
+                                 project_id: target.project.id,
+                                 id: target.id,
+                             }
+                         ]
+                       when CalendarEvent
+                         # TODO
+                       else
+                         ''
+                     end
+    url_helpers.send("#{method}_path", params) if method.present?
   end
 
   def event_body_url(event)
