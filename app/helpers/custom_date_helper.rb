@@ -12,20 +12,19 @@ module CustomDateHelper
   def to_chinese_date(target_date)
     return if target_date.blank?
 
-    now = Time.now
-    case target_date
-      when now.beginning_of_day..now.end_of_day
-        '今天'
-      when now.end_of_day..tomorrow_end
-        '明天'
-      when tomorrow_end..now.end_of_week
-        "本周#{CHINESE_DAYS[day_of_week(target_date)]}"
-      when now.end_of_week..next_week_end
-        "下周#{CHINESE_DAYS[day_of_week(target_date)]}"
-      when next_week_end..now.end_of_year
-        target_date.strftime('%m月%d日')
-      else
-        target_date.strftime('%Y年%m月%d日')
+    now, target_date = Time.now, Time.parse(target_date)
+    if (now.beginning_of_day..now.end_of_day).cover?(target_date)
+      '今天'
+    elsif (now.end_of_day..tomorrow_end).cover?(target_date)
+      '明天'
+    elsif (tomorrow_end..now.end_of_week).cover?(target_date)
+      "本周#{CHINESE_DAYS[day_of_week(target_date)]}"
+    elsif (now.end_of_week..next_week_end).cover?(target_date)
+      "下周#{CHINESE_DAYS[day_of_week(target_date)]}"
+    elsif (next_week_end..now.end_of_year).cover?(target_date)
+      target_date.strftime('%m月%d日')
+    else
+      target_date.strftime('%Y年%m月%d日')
     end
   end
 
