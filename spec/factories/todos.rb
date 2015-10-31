@@ -6,7 +6,7 @@
 #  title        :string
 #  description  :text
 #  deadline     :date
-#  status       :integer          default(0)
+#  status       :integer
 #  creator_id   :integer
 #  assignee_id  :integer
 #  created_at   :datetime         not null

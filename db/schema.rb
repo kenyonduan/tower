@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030035625) do
+ActiveRecord::Schema.define(version: 20151031022826) do
 
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
@@ -132,11 +132,11 @@ ActiveRecord::Schema.define(version: 20151030035625) do
     t.string   "title"
     t.text     "description"
     t.date     "deadline"
-    t.integer  "status",       default: 0
+    t.integer  "status"
     t.integer  "creator_id"
     t.integer  "assignee_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "todo_list_id"
   end
 
