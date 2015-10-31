@@ -25,4 +25,8 @@ module FeedsFactroy
   def success_resp
     '{"status":"success"}'
   end
+
+  def except_date(hash)
+    hash.except!('id', 'created_at', 'updated_at', :html)
+  end
 end
